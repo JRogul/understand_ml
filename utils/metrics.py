@@ -56,7 +56,7 @@ def precision(y_true, y_pred):
         correct_preds = np.where(y_true == class_idx)[0]
         #common elements between 2 arrays
         common = len(np.intersect1d(total_preds, correct_preds)) 
-        if total_preds == 0:
+        if len(total_preds) == 0:
             precisions.append(0)
         else:
             precisions.append(common / len(total_preds))
