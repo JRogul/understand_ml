@@ -28,7 +28,7 @@ def recall(y_true, y_pred):
 
     recalls = []
     for class_idx in range(len(np.unique(y_true))):
-        num_correct =len(np.where((y_true == class_idx) & (y_pred == class_idx))[0])
+        num_correct =len(np.where((y_true == class_idx) & (y_pred == np.int64(class_idx)))[0])
         total_true =  len(np.where(y_true == class_idx)[0])
 
         if total_true == 0:
@@ -52,7 +52,7 @@ def precision(y_true, y_pred):
 
     precisions = []
     for class_idx in range(len(np.unique(y_true))):
-        total_preds = np.where(y_pred == class_idx)[0] 
+        total_preds = np.where(y_pred == np.int64(class_idx))[0] 
         correct_preds = np.where(y_true == class_idx)[0]
         #common elements between 2 arrays
         common = len(np.intersect1d(total_preds, correct_preds)) 
