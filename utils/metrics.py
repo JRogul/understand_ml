@@ -83,3 +83,10 @@ def f1_score(y_true, y_pred):
                     / (precisions[class_idx] + recalls[class_idx] + 1e-8) 
         f1_scores.append(f1_score)
     return np.array(f1_scores)
+
+def print_metrics(model, X_test, y_test):
+    preds, y_true = model.predict(X_test, y_test)
+    print(f'Accuracy: {np.around(accuracy(y_true, preds), 2)*100}%' 
+            f'\nRecall: {np.around(recall(y_true, preds), 2)}'
+            f'\nPrecision: {np.around(precision(y_true, preds), 2)}'
+            f'\nf1score:{np.around(f1_score(y_true, preds), 2)}')
