@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from utils import metrics
 
-def plot_decision_regions(X, y, classifier, resolution=0.02, return_metrics=False):
+def plot_decision_regions(X, y, classifier, resolution=0.02, print_metrics=False):
     """
     Plots decision regions of a classifier.
 
@@ -55,9 +55,5 @@ def plot_decision_regions(X, y, classifier, resolution=0.02, return_metrics=Fals
     plt.legend(loc='upper left')
     plt.show()
     
-    if return_metrics == True:
-        preds, y_true = classifier.predict(X, y)
-        print(f'Accuracy: {np.around(metrics.accuracy(y_true, preds), 2)*100}%' 
-              f'\nRecall: {np.around(metrics.recall(y_true, preds), 2)}'
-              f'\nPrecision: {np.around(metrics.precision(y_true, preds), 2)}'
-              f'\nf1score:{np.around(metrics.f1_score(y_true, preds), 2)}')
+    if print_metrics == True:
+        metrics.print_metrics(classifier, X, y)
