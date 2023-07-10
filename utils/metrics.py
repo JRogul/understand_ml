@@ -2,8 +2,9 @@ import numpy as np
 
 def accuracy(y_true, y_pred):
     """
-    Function to calculate the accuracy of model predictions.
-
+    Function to calculate the accuracy of model predictions.\n
+    Number of correctly predicted classes / all predictions
+    
     Parameters:
     y_true (np.array): Ground truth labels.
     y_pred (np.array): Model's predictions.
@@ -16,7 +17,8 @@ def accuracy(y_true, y_pred):
 
 def recall(y_true, y_pred):
     """
-    Function to calculate the recall for each class.
+    Function to calculate the recall for each class.\n
+    Recall = TP / (TP + FN)
 
     Parameters:
     y_true (np.array): Ground truth labels.
@@ -28,7 +30,9 @@ def recall(y_true, y_pred):
 
     recalls = []
     for class_idx in range(len(np.unique(y_true))):
+        #TP
         num_correct =len(np.where((y_true == class_idx) & (y_pred == np.int64(class_idx)))[0])
+        #TP + FN
         total_true =  len(np.where(y_true == class_idx)[0])
 
         if total_true == 0:
@@ -40,8 +44,9 @@ def recall(y_true, y_pred):
 
 def precision(y_true, y_pred):
     """
-    Function to calculate the precision for each class.
-
+    Function to calculate the precision for each class.\n
+    Precision = TP / (TP + FP)
+    
     Parameters:
     y_true (np.array): Ground truth labels.
     y_pred (np.array): Model's predictions.
@@ -65,7 +70,8 @@ def precision(y_true, y_pred):
 
 def f1_score(y_true, y_pred):
     """
-    Function to calculate the F1 score for each class.
+    Function to calculate the F1 score for each class.\n
+    F1 =  2 * (Precision * Recall) / (Precision + Recall)
 
     Parameters:
     y_true (np.array): Ground truth labels.
@@ -90,3 +96,26 @@ def print_metrics(model, X_test, y_test):
             f'\nRecall: {np.around(recall(y_true, preds), 2)}'
             f'\nPrecision: {np.around(precision(y_true, preds), 2)}'
             f'\nf1score:{np.around(f1_score(y_true, preds), 2)}')
+    
+
+def confusion_matrix(y_true, y_pred):
+    """
+    Compute the confusion matrix for actual and predicted class labels.
+
+    Parameters:
+    y_true (numpy.array): 1D array of actual class labels.
+    y_pred (numpy.array): 1D array of predicted class labels.
+
+    Returns:
+    numpy.array: The confusion matrix, a 2D array where the i-th row and j-th column 
+    entry indicates the number of samples with true label being i-th class 
+    and prediced label being j-th class.
+    """
+    
+    conf_matrix = np.zeros((len(np.unique(y_true)), len(np.unique(y_true))))
+    classes = np.unique(np.concatenate([y_true, y_pred]))
+
+    for i, true_class in enumerate(classes):
+            for j, pred_class in enumerate(classes):
+                conf_matrix[i, j] = len(np.where((y_true == true_class) & (y_pred == pred_class))[0])
+    return conf_matrix
