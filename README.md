@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
 
 from utils import metrics
-from utils import models
+from models import models
 from utils import plots
 
 np.set_printoptions(suppress=True)
