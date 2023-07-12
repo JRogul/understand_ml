@@ -1,6 +1,34 @@
 import numpy as np
 
-#softmax
+
+def mean_square_error(y_true, y_pred):
+    """
+    Calculate the Mean Squared Error between true and predicted values.
+
+    Parameters:
+    y_true (numpy.ndarray): Array of true values.
+    y_pred (numpy.ndarray): Array of predicted values.
+
+    Returns:
+    float: The Mean Squared Error.
+    """
+
+    return np.mean((y_true - y_pred)** 2) 
+
+def mean_absolute_error(y_true, y_pred):
+    """
+    Calculate the Mean Absolute Error between true and predicted values.
+
+    Parameters:
+    y_true (numpy.ndarray): Array of true values.
+    y_pred (numpy.ndarray): Array of predicted values.
+
+    Returns:
+    float: The Mean Absolute Error.
+    """
+
+    return np.mean(np.abs(y_true - y_pred))
+
 def softmax(X):
     """
     The softmax function takes an N-dimensional array of real numbers and transforms it 
@@ -16,7 +44,6 @@ def softmax(X):
  
     return np.exp(X) / np.sum(np.exp(X))
 
-#Negative log likelihood
 def nll(X, softmaxed=True):
     """
     The negative log likelihood (NLL) function measures the dissimilarity between an estimated 
@@ -33,12 +60,11 @@ def nll(X, softmaxed=True):
 
     if softmaxed== False:
         #first softmax, then -log(x)
-        return np.sum(- np.log10(np.exp(X) / np.sum(np.exp(X))))
+        return np.sum(- np.log10(softmax(X)))
     else:
         #-log(x)
         return np.sum(- np.log10(X))
     
-#Multiclass SVM loss
 def multi_class_svm_loss(X, class_index, margin=1):
     
     """
