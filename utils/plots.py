@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
+import seaborn as sns
 from utils import metrics
 
 def plot_decision_regions(X, y, classifier, resolution=0.02, print_metrics=False):
@@ -57,3 +58,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02, print_metrics=False
     
     if print_metrics == True:
         metrics.print_metrics(classifier, X, y)
+
+def plot_confusion_matrix(conf_matrix):
+    sns.heatmap(conf_matrix, annot=True, cmap='Blues')
+    plt.show()
