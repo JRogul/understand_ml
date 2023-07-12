@@ -1,5 +1,33 @@
 import numpy as np
 
+def mean_square_error(y_true, y_pred):
+    """
+    Calculate the Mean Squared Error between true and predicted values.
+
+    Parameters:
+    y_true (numpy.ndarray): Array of true values.
+    y_pred (numpy.ndarray): Array of predicted values.
+
+    Returns:
+    float: The Mean Squared Error.
+    """
+
+    return np.mean((y_true - y_pred)** 2) 
+
+def mean_absolute_error(y_true, y_pred):
+    """
+    Calculate the Mean Absolute Error between true and predicted values.
+
+    Parameters:
+    y_true (numpy.ndarray): Array of true values.
+    y_pred (numpy.ndarray): Array of predicted values.
+
+    Returns:
+    float: The Mean Absolute Error.
+    """
+
+    return np.mean(np.abs(y_true - y_pred))
+
 def accuracy(y_true, y_pred):
     """
     Function to calculate the accuracy of model predictions.\n
@@ -91,6 +119,19 @@ def f1_score(y_true, y_pred):
     return np.array(f1_scores)
 
 def print_metrics(model, X_test, y_test):
+    """
+    Calculate and print the Accuracy, Recall, Precision, and F1 Score 
+    of the given model on the test data.
+
+    Parameters:
+    model (object): The machine learning model to evaluate.
+    X_test (numpy.ndarray): The test feature data.
+    y_test (numpy.ndarray): The true labels for the test data.
+
+    Returns:
+    None
+    """
+    
     preds, y_true = model.predict(X_test, y_test)
     print(f'Accuracy: {np.around(accuracy(y_true, preds), 2)*100}%' 
             f'\nRecall: {np.around(recall(y_true, preds), 2)}'
