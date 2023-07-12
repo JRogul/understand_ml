@@ -33,4 +33,4 @@ class K_Nearest_Neighbors:
         if len(y_test) == 0:
             return predictions
         else:
-            return predictions, y_test
+            return np.array(predictions), y_test
