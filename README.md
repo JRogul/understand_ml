@@ -46,3 +46,4 @@ preds, y_true = model.predict(X_test, y_test)
 # Plot decision regions and return computed metrics
 plots.plot_decision_regions(X_test, y_test, model, print_metrics=True)
 ```
+Outputs are visible inside example.ipynb file
