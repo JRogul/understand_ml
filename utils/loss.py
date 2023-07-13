@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def mean_square_error(y_true, y_pred):
+def MSELoss(y_true, y_pred):
     """
     Calculate the Mean Squared Error between true and predicted values.
 
@@ -15,7 +15,7 @@ def mean_square_error(y_true, y_pred):
 
     return np.mean((y_true - y_pred)** 2) 
 
-def mean_absolute_error(y_true, y_pred):
+def MAELoss(y_true, y_pred):
     """
     Calculate the Mean Absolute Error between true and predicted values.
 
