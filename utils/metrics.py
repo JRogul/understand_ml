@@ -1,6 +1,6 @@
 import numpy as np
 
-def mean_square_error(y_true, y_pred):
+def mean_square_error(y_true, y_pred, root=False):
     """
     Calculate the Mean Squared Error between true and predicted values.
 
@@ -11,8 +11,10 @@ def mean_square_error(y_true, y_pred):
     Returns:
     float: The Mean Squared Error.
     """
-
-    return np.mean((y_true - y_pred)** 2) 
+    if root == True:
+         return np.sqrt(np.mean((y_true - y_pred)** 2))
+    else:
+        return np.mean((y_true - y_pred)** 2) 
 
 def mean_absolute_error(y_true, y_pred):
     """
