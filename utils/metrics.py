@@ -115,6 +115,7 @@ def f1_score(y_true, y_pred):
     recalls  = recall(y_true, y_pred)
     f1_scores = []
     for class_idx in range(len(np.unique(y_true))):
+        #1e-8 prevents divison by zero
         f1_score = 2* (precisions[class_idx] * recalls[class_idx]) \
                     / (precisions[class_idx] + recalls[class_idx] + 1e-8) 
         f1_scores.append(f1_score)
