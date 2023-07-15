@@ -37,6 +37,11 @@ class TestMetrics(unittest.TestCase):
     def test_f1_score(self):
         result = f1_score(self.cat_y_true, self.cat_y_pred)
         np.testing.assert_allclose(result, metrics.f1_score(self.cat_y_true, self.cat_y_pred, average=None), rtol=1e-03)
+    def test_confusion_matrix(self):
+        cat_y_true = [1, 2, 3, 1, 2, 3]
+        cat_y_pred= [1, 2, 1, 1, 2, 3]
+        result = metrics.confusion_matrix(cat_y_true, cat_y_pred)
+        np.testing.assert_allclose(result, metrics.confusion_matrix(cat_y_true, cat_y_pred))
 
 if __name__ == "__main__":
     unittest.main()
