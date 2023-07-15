@@ -141,18 +141,17 @@ def print_metrics(model, X_test, y_test):
             f'\nf1score:{np.around(f1_score(y_true, preds), 2)}')
     
 
-def confusion_matrix(y_true, y_pred):
+def confusion_matrix(y_true, y_pred, return_perf_measurement=False):
     """
-    Compute the confusion matrix for actual and predicted class labels.
+    Computes a confusion matrix for given labels.
 
     Parameters:
-    y_true (numpy.array): 1D array of actual class labels.
-    y_pred (numpy.array): 1D array of predicted class labels.
+    y_true, y_pred (numpy.array): Actual and predicted class labels.
+    return_perf_measurement (bool, optional): If True, function also returns performance measurements (TP, FP, FN, TN). Default is False.
 
     Returns:
-    numpy.array: The confusion matrix, a 2D array where the i-th row and j-th column 
-    entry indicates the number of samples with true label being i-th class 
-    and prediced label being j-th class.
+    numpy.array: The confusion matrix if 'return_perf_measurement' is False.
+    Tuple: If 'return_perf_measurement' is True, a tuple containing the confusion matrix and numpy arrays for TP, FP, FN, TN is returned.
     """
     
     conf_matrix = np.zeros((len(np.unique(y_true)), len(np.unique(y_true))))
@@ -161,4 +160,13 @@ def confusion_matrix(y_true, y_pred):
     for i, true_class in enumerate(classes):
             for j, pred_class in enumerate(classes):
                 conf_matrix[i, j] = len(np.where((y_true == true_class) & (y_pred == pred_class))[0])
+    
+    if return_perf_measurement:
+        TP, FP, FN, TN = [], [], [], []
+        for i in range(len(np.unique(y_true))):
+            TP.append(conf_matrix[i][i])
+            FP.append(np.sum(conf_matrix[:, i]) - TP[i])
+            FN.append(np.sum(conf_matrix[i, :]) - TP[i])
+            TN.append(np.sum(conf_matrix) - TP[i] - FN[i] - FP[i])
+        return conf_matrix, np.array(TP), np.array(FP), np.array(FN), np.array(TN)
     return conf_matrix
