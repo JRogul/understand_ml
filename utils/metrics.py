@@ -140,6 +140,14 @@ def print_metrics(model, X_test, y_test):
             f'\nPrecision: {np.around(precision(y_true, preds), 2)}'
             f'\nf1score:{np.around(f1_score(y_true, preds), 2)}')
     
+def compute_measurements(conf_matrix):
+    TP, FP, FN, TN = [], [], [], []
+    for i in range(len(conf_matrix)):
+        TP.append(conf_matrix[i][i])
+        FP.append(np.sum(conf_matrix[:, i]) - TP[i])
+        FN.append(np.sum(conf_matrix[i, :]) - TP[i])
+        TN.append(np.sum(conf_matrix) - TP[i] - FN[i] - FP[i])
+    return np.array(TP), np.array(FP), np.array(FN), np.array(TN)
 
 def confusion_matrix(y_true, y_pred, return_perf_measurement=False):
     """
@@ -153,7 +161,6 @@ def confusion_matrix(y_true, y_pred, return_perf_measurement=False):
     numpy.array: The confusion matrix if 'return_perf_measurement' is False.
     Tuple: If 'return_perf_measurement' is True, a tuple containing the confusion matrix and numpy arrays for TP, FP, FN, TN is returned.
     """
-    
     conf_matrix = np.zeros((len(np.unique(y_true)), len(np.unique(y_true))))
     classes = np.unique(np.concatenate([y_true, y_pred]))
 
@@ -162,11 +169,5 @@ def confusion_matrix(y_true, y_pred, return_perf_measurement=False):
                 conf_matrix[i, j] = len(np.where((y_true == true_class) & (y_pred == pred_class))[0])
     
     if return_perf_measurement:
-        TP, FP, FN, TN = [], [], [], []
-        for i in range(len(np.unique(y_true))):
-            TP.append(conf_matrix[i][i])
-            FP.append(np.sum(conf_matrix[:, i]) - TP[i])
-            FN.append(np.sum(conf_matrix[i, :]) - TP[i])
-            TN.append(np.sum(conf_matrix) - TP[i] - FN[i] - FP[i])
-        return conf_matrix, np.array(TP), np.array(FP), np.array(FN), np.array(TN)
+          return conf_matrix, compute_measurements(conf_matrix)  
     return conf_matrix
