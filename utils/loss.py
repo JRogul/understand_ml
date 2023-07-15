@@ -31,18 +31,19 @@ def MAELoss(y_true, y_pred):
 
 def softmax(X):
     """
-    The softmax function takes an N-dimensional array of real numbers and transforms it 
-    into a probability distribution. Each element of the output array is in the range (0, 1), 
-    and the total sum of the elements is 1.
-
+    Converts an N-dimensional array to a probability distribution using the softmax function.
+    
     Parameters:
     X (numpy.ndarray): Input array.
 
     Returns:
-    numpy.ndarray: Probability distribution generated from the input.
+    numpy.ndarray: Output array as a probability distribution.
     """
  
-    return np.exp(X) / np.sum(np.exp(X))
+    if len(X.shape) == 1:
+        return np.exp(X) / np.sum(np.exp(X))
+    elif len(X.shape) == 2:
+        return np.exp(X) / np.sum(np.exp(X), axis=1).reshape(-1, 1)
 
 def nll(X, softmaxed=True):
     """
@@ -86,3 +87,21 @@ def multi_class_svm_loss(X, class_index, margin=1):
 
     #substracting -1 for the index == correct class
     return loss - 1
+
+def CrossEntropyLoss(y_pred, y_test):
+    """
+    Computes the cross-entropy loss between predicted and true labels.
+
+    Parameters:
+    y_pred (np.ndarray): Predicted probabilities from the model.
+    y_test (np.ndarray): True labels.
+
+    Returns:
+    float: The cross-entropy loss.
+    """
+
+    soft = softmax(y_pred)
+    column_indicies = y_test
+    row_indicies = range(len(soft))
+    loss = -1 * np.sum(np.log(soft[row_indicies, column_indicies])) / len(soft)
+    return loss
