@@ -15,9 +15,9 @@ class TestMetrics(unittest.TestCase):
 
         self.assertAlmostEqual(results, 0.7, places=7)
 
-    def test_mean_square_error(self):
-        mse = mean_square_error(self.lin_y_true, self.lin_y_pred)
-        rmse = mean_square_error(self.lin_y_true, self.lin_y_pred, root=True)
+    def test_mean_squared_error(self):
+        mse = mean_squared_error(self.lin_y_true, self.lin_y_pred)
+        rmse = mean_squared_error(self.lin_y_true, self.lin_y_pred, root=True)
         self.assertAlmostEqual(mse, metrics.mean_squared_error(self.lin_y_true, self.lin_y_pred), places=7)
         self.assertAlmostEqual(rmse, metrics.mean_squared_error(self.lin_y_true, self.lin_y_pred, squared=False), places=7)
         

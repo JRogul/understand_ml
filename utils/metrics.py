@@ -1,6 +1,6 @@
 import numpy as np
 
-def mean_square_error(y_true, y_pred, root=False):
+def mean_squared_error(y_true, y_pred, root=False):
     """
     Calculate the Mean Squared Error between true and predicted values.
 
