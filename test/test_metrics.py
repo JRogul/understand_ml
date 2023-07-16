@@ -12,36 +12,42 @@ class TestMetrics(unittest.TestCase):
 
     def test_accuracy(self):
         results = accuracy(self.cat_y_true, self.cat_y_pred)
-
-        self.assertAlmostEqual(results, 0.7, places=7)
+        expected_result = 0.7
+        self.assertAlmostEqual(results, expected_result, places=7)
 
     def test_mean_squared_error(self):
         mse = mean_squared_error(self.lin_y_true, self.lin_y_pred)
+        expected_mse = metrics.mean_squared_error(self.lin_y_true, self.lin_y_pred)
         rmse = mean_squared_error(self.lin_y_true, self.lin_y_pred, root=True)
-        self.assertAlmostEqual(mse, metrics.mean_squared_error(self.lin_y_true, self.lin_y_pred), places=7)
-        self.assertAlmostEqual(rmse, metrics.mean_squared_error(self.lin_y_true, self.lin_y_pred, squared=False), places=7)
+        expected_rmse = metrics.mean_squared_error(self.lin_y_true, self.lin_y_pred, squared=False)
+        self.assertAlmostEqual(mse, expected_mse, places=7)
+        self.assertAlmostEqual(rmse, expected_rmse, places=7)
         
     def test_mean_absolute_error(self):
         result = mean_absolute_error(self.lin_y_true, self.lin_y_pred)
-        result = mean_absolute_error(self.lin_y_true, self.lin_y_pred)
-        self.assertAlmostEqual(result, metrics.mean_absolute_error(self.lin_y_true, self.lin_y_pred), places=7)
+        expected_result =  metrics.mean_absolute_error(self.lin_y_true, self.lin_y_pred)
+        self.assertAlmostEqual(result, expected_result, places=7)
 
     def test_recall(self):
         result = recall(self.cat_y_true, self.cat_y_pred)
-        np.testing.assert_allclose(result, metrics.recall_score(self.cat_y_true, self.cat_y_pred, average=None), rtol=1e-03)
+        expected_result = metrics.recall_score(self.cat_y_true, self.cat_y_pred, average=None)
+        np.testing.assert_allclose(result, expected_result, rtol=1e-03)
 
     def test_precision(self):
         result = precision(self.cat_y_true, self.cat_y_pred)
-        np.testing.assert_allclose(result, metrics.precision_score(self.cat_y_true, self.cat_y_pred, average=None), rtol=1e-03)
+        expected_result = metrics.precision_score(self.cat_y_true, self.cat_y_pred, average=None)
+        np.testing.assert_allclose(result, expected_result, rtol=1e-03)
 
     def test_f1_score(self):
         result = f1_score(self.cat_y_true, self.cat_y_pred)
-        np.testing.assert_allclose(result, metrics.f1_score(self.cat_y_true, self.cat_y_pred, average=None), rtol=1e-03)
+        expected_result = metrics.f1_score(self.cat_y_true, self.cat_y_pred, average=None)
+        np.testing.assert_allclose(result, expected_result, rtol=1e-03)
     def test_confusion_matrix(self):
         cat_y_true = [1, 2, 3, 1, 2, 3]
         cat_y_pred= [1, 2, 1, 1, 2, 3]
         result = metrics.confusion_matrix(cat_y_true, cat_y_pred)
-        np.testing.assert_allclose(result, metrics.confusion_matrix(cat_y_true, cat_y_pred))
+        expected_result = metrics.confusion_matrix(cat_y_true, cat_y_pred)
+        np.testing.assert_allclose(result, expected_result)
 
 if __name__ == "__main__":
     unittest.main()
