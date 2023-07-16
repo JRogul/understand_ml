@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def MSELoss(y_true, y_pred):
+def mean_squared_error_loss(y_true, y_pred):
     """
     Calculate the Mean Squared Error between true and predicted values.
 
@@ -15,7 +15,7 @@ def MSELoss(y_true, y_pred):
 
     return np.mean((y_true - y_pred)** 2) 
 
-def MAELoss(y_true, y_pred):
+def mean_absolute_error_loss(y_true, y_pred):
     """
     Calculate the Mean Absolute Error between true and predicted values.
 
@@ -45,7 +45,7 @@ def softmax(X):
     elif len(X.shape) == 2:
         return np.exp(X) / np.sum(np.exp(X), axis=1).reshape(-1, 1)
 
-def nll(X, softmaxed=True):
+def negative_log_likelihood(X, softmaxed=True):
     """
     The negative log likelihood (NLL) function measures the dissimilarity between an estimated 
     probability distribution (from the softmax function) and the true distribution.
@@ -88,7 +88,7 @@ def multi_class_svm_loss(X, class_index, margin=1):
     #substracting -1 for the index == correct class
     return loss - 1
 
-def CrossEntropyLoss(y_pred, y_test):
+def cross_entropy_loss(y_pred, y_test):
     """
     Computes the cross-entropy loss between predicted and true labels.
 
