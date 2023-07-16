@@ -10,7 +10,6 @@ class TestMetrics(unittest.TestCase):
         self.y_test = np.array([1, 1, 1])
 
     def test_cross_entropy_loss(self):
-
         criterion = torch.nn.CrossEntropyLoss()
         expected_result = np.array(cross_entropy_loss(self.y_pred, self.y_test), dtype=np.float32)
         result = criterion(torch.tensor(self.y_pred, dtype=torch.float), 
